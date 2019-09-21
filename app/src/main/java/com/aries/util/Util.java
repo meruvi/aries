@@ -1,6 +1,9 @@
 package com.aries.util;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +13,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class Util {
-//    public static final int DATA_BASE_VERSION_ZEUS = 1;
+    public static final int DATA_BASE_VERSION_ZEUS = 1;
 //    public static final String ipServer = "http://";
 //    public static final String urlServer = "/zeus/service/";
 //
@@ -149,15 +152,15 @@ public class Util {
 //    }
 //
 //
-//    public static String getVersionName(Context context) {
-//        try {
-//            ComponentName comp = new ComponentName(context, Util.class);
-//            PackageInfo pinfo = context.getPackageManager().getPackageInfo(comp.getPackageName(), 0);
-//            return pinfo.versionName;
-//        } catch (NameNotFoundException e) {
-//            return null;
-//        }
-//    }
+    public static String getVersionName(Context context) {
+        try {
+            ComponentName comp = new ComponentName(context, Util.class);
+            PackageInfo pinfo = context.getPackageManager().getPackageInfo(comp.getPackageName(), 0);
+            return pinfo.versionName;
+        } catch (NameNotFoundException e) {
+            return null;
+        }
+    }
 //
 //    public static int getVersionCode(Context context) {
 //        try {
