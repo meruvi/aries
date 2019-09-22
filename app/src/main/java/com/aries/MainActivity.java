@@ -13,8 +13,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.aries.controller.MenuController;
+import com.aries.entity.Personal;
+
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Personal personal;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +46,24 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        if (getIntent().getExtras() != null) {
+            personal = (Personal) getIntent().getExtras().getSerializable("personal");
+            cargarMenuItems(personal.getCodCargo());
+        }
+
+    }
+
+    public void cargarMenuItems(int codCargo){
+        MenuController cMenu = new MenuController(this);
+        ArrayList<Integer> listMenuSegunCargo = cMenu.getListMenuByCargo(codCargo);
+        Menu menu = navigationView.getMenu();
+        for(int i = 0; i < listMenuSegunCargo.size(); i++){
+            int cod = listMenuSegunCargo.get(i) - 1;
+            menu.getItem(cod).setVisible(true);
+        }
     }
 
     @Override
@@ -80,7 +104,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        /*if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
 
@@ -92,7 +116,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
