@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,7 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         //startService(service);
         Log.i(TAG, "--------------------FIN-----------------");
         usuarioEdit = (EditText) findViewById(R.id.usuarioEdit);
+        usuarioEdit.setFilters(new InputFilter[]{filter});
         passwordEdit = (EditText) findViewById(R.id.passwordEdit);
+        passwordEdit.setFilters(new InputFilter[]{filter});
         loginButton = (Button) findViewById(R.id.loginButton);
         versionName = (TextView) findViewById(R.id.versionName);
         versionName.setText("Version " + Util.getVersionName(getApplicationContext()));
@@ -74,7 +78,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (mapPersonal.containsKey(usuarioEdit.getText().toString() + passwordEdit.getText().toString())) {
                         Personal personal = mapPersonal.get(usuarioEdit.getText().toString() + passwordEdit.getText().toString());
                         intent.putExtra("personal", personal);
-//                            intent.putExtra("tipoVista", TipoVista.PROMOTOR.ordinal());  //
                         startActivity(intent);
                         finish();
 
@@ -93,4 +96,16 @@ public class LoginActivity extends AppCompatActivity {
         mapPersonal = personalController.getListPersonal();
         super.onStart();
     }
+
+    //Filtro para no dejar ingresar caracteres especiales (espacios en blanco)
+    private String blockCharacterSet = " ";
+    private InputFilter filter = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {
+            if (charSequence != null && blockCharacterSet.contains(("" + charSequence))) {
+                return "";
+            }
+            return null;
+        }
+    };
 }

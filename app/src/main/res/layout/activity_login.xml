@@ -41,6 +41,7 @@
             android:id="@+id/usuarioEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:hint="Usuario"/>
 
         <TextView
@@ -54,6 +55,7 @@
             android:id="@+id/passwordEdit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:singleLine="true"
             android:inputType="textPassword"
             android:hint="Contraseña"/>
 
