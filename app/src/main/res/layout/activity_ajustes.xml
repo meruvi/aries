@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:text="Configuracion Servidores"
+        android:textSize="17sp" />
+
+    <Spinner
+        android:id="@+id/comboRegional"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:layout_marginTop="15dp"    android:spinnerMode="dropdown" />
+
+
+
+    <EditText
+        android:id="@+id/ipExterna"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:singleLine="true"
+        android:hint="IP Externa : 172.16.10.206:8080" >
+        <requestFocus />
+
+    </EditText>
+    <EditText
+        android:id="@+id/ipRegional"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:singleLine="true"
+        android:hint="IP Regional :172.16.10.206:8080"
+        tools:ignore="HardcodedText" >
+
+
+    </EditText>
+
+    <Button
+        android:id="@+id/btnGuardarConfig"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Guardar" />
+
+</LinearLayout>

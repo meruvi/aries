@@ -4,6 +4,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class Util {
+    public static final String DATA_BASE_NAME = "aries";
     public static final int DATA_BASE_VERSION_ZEUS = 1;
 //    public static final String ipServer = "http://";
 //    public static final String urlServer = "/zeus/service/";
@@ -94,14 +97,14 @@ public class Util {
 //        }
 //    }
 //
-//    public static boolean isOnline(Context context) {
-//        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-//        if (netInfo != null && netInfo.isConnected()) {
-//            return true;
-//        }
-//        return false;
-//    }
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            return true;
+        }
+        return false;
+    }
 //
 //    public static String convertInputStreamToString2(InputStream is) {
 //        BufferedReader br = null;

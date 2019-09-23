@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btnAjustesServidor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Ajustes Servidor" />
+
+    <Button
+        android:id="@+id/sincronizacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Pedidos" />
+
+    <Button
+        android:id="@+id/sincronizacionDatosGenerales"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Datos Generales" />
+
+    <Button
+        android:id="@+id/sincronizacionOfertas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Ofertas" />
+
+    <Button
+        android:id="@+id/sincronizacionCatalogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Catalogo" />
+
+    <Button android:visibility="gone"
+        android:id="@+id/sincronizacionCuentasxCobrar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Cuentas x Cobrar" />
+
+    <Button
+        android:id="@+id/sincronizacionUbicacionClientes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Ubicacion Clientes" />
+
+
+    <Button android:visibility="gone"
+        android:id="@+id/sincronizacionCobranzas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Cobranzas" />
+
+
+
+    <Button  android:visibility="gone"
+        android:id="@+id/sincronizacionSeguimientoCampania"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Campañas" />
+
+    <Button  android:visibility="gone"
+        android:id="@+id/sincronizacionSeguimientoOfertaAcumulada"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Actualizar Seguimiento Oferta Acumulada" />
+
+    <Button  android:visibility="gone"
+        android:id="@+id/enviarTabla"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Datos Boletas" />
+
+
+    <Button android:id="@+id/boletas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Boletas" />
+
+    <Button android:id="@+id/exportData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Exportar Datos" />
+
+    <Button android:id="@+id/importData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Importar Datos" />
+
+</LinearLayout>

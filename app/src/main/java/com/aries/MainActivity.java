@@ -1,8 +1,11 @@
 package com.aries;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,8 +15,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.aries.controller.MenuController;
+import com.aries.controller.PersonalController;
 import com.aries.entity.Personal;
 
 import java.util.ArrayList;
@@ -22,7 +27,10 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     Personal personal;
+    private TextView nombrePersonal, cargoPersonal;
     NavigationView navigationView;
+    DrawerLayout mDrawerLayout;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +48,24 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        nombrePersonal = (TextView) navigationView.getHeaderView(0).findViewById(R.id.nombrePersonal);
+        cargoPersonal = (TextView) navigationView.getHeaderView(0).findViewById(R.id.cargoPersonal);
 
         if (getIntent().getExtras() != null) {
             personal = (Personal) getIntent().getExtras().getSerializable("personal");
             cargarMenuItems(personal.getCodCargo());
+
+            PersonalController personalController = new PersonalController(this);
+            nombrePersonal.setText(personal.getNombresPersonal() + " " + personal.getApPaternoPersonal() + " " + personal.getApMaternoPersonal());
+            cargoPersonal.setText(personalController.getNombreCargo(personal.getCodCargo()));
         }
 
     }
@@ -68,9 +82,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
@@ -102,24 +115,50 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        Fragment fragment = null;
 
-        /*if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        Bundle args = new Bundle();
+        switch (item.getItemId()) {
+            case R.id.nav_pedidos:
+                //fragment = TabbedActivityPedido.newInstance();
+                //args.putSerializable("personal", personal);
+                break;
+            case R.id.nav_cuentas_cobrar:
+                break;
+            case R.id.nav_georef_clientes:
+                break;
+            case R.id.nav_georef_medicos:
+                break;
+            case R.id.nav_cobranzas:
+                break;
+            case R.id.nav_boleta_visita:
+                break;
+            case R.id.nav_visitas:
+                break;
+            case R.id.nav_presupuesto:
+                break;
+            case R.id.nav_entrega_pedidos:
+                break;
+            case R.id.nav_ajustes:
+                fragment = new SincronizacionConfigFragment();
+                args.putSerializable("personal", personal);
+                break;
+            case R.id.nav_salir:
+                intent = new Intent(getApplicationContext(), LoginActivity.class);
+                break;
+        }
 
-        } else if (id == R.id.nav_slideshow) {
+        if(fragment != null) {
+            fragment.setArguments(args);
+            FragmentManager fragmentManager = this.getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        }else if(intent != null){
+            startActivity(intent);
+            finish();
+        }
 
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 }

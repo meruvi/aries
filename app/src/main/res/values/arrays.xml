@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="regionales" >
+        <item>Seleccionar Agencia</item>
+        <item>AGENCIA REGIONAL LA PAZ</item>
+        <item>AGENCIA REGIONAL EL ALTO</item>
+        <item>AGENCIA REGIONAL POTOSI</item>
+        <item>AGENCIA REGIONAL COCHABAMBA</item>
+        <item>AGENCIA REGIONAL QUILLACOLLO</item>
+        <item>AGENCIA REGIONAL RIBERALTA</item>
+        <item>AGENCIA REGIONAL SANTA CRUZ</item>
+        <item>AGENCIA REGIONAL SUCRE</item>
+        <item>AGENCIA REGIONAL TRINIDAD</item>
+        <item>AGENCIA REGIONAL TARIJA</item>
+        <item>AGENCIA REGIONAL ORURO</item>
+        <item>AGENCIA REGIONAL MONTERO</item>
+    </string-array>
+</resources>

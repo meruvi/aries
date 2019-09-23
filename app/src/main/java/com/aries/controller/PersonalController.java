@@ -1,5 +1,6 @@
 package com.aries.controller;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,6 +10,7 @@ import android.util.Log;
 import com.aries.entity.Personal;
 import com.aries.util.Util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -220,43 +222,42 @@ public class PersonalController extends SQLiteOpenHelper {
 //
 //
 //
-//    public int actualizarPersonal(Collection<Personal> lista){
-//
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        int cantidadPersonal=0;
-//        try{
-//            db.beginTransaction();
-//            db.delete("personal", null, null);
-//
-//            for(Personal personal:lista){
-//
-//                ContentValues data = new ContentValues();
-//                data.put("NOMBRE_USUARIO", personal.getNombreUsuario());
-//                data.put("CONTRASENA_USUARIO", personal.getContraseniaUsuario());
-//                data.put("cod_personal", personal.getCodPersonal());
-//                data.put("NOMBRES_PERSONAL", personal.getNombresPersonal());
-//                data.put("AP_PATERNO_PERSONAL", personal.getApPaternoPersonal());
-//                data.put("AP_MATERNO_PERSONAL", personal.getApMaternoPersonal());
-//                data.put("COD_AREA_EMPRESA", personal.getCodAreaEmpresa());
-//                data.put("COD_CARGO", personal.getCodCargo());
-//                cantidadPersonal+=db.insert("personal", null, data);
-//
-//
-//            }
-//            db.setTransactionSuccessful();
-//
-//
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//        finally{
-//            db.endTransaction();
-//            db.close();
-//
-//        }
-//
-//        return cantidadPersonal;
-//    }
+    public int actualizarPersonal(ArrayList<Personal> lista){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        int cantidadPersonal=0;
+        try{
+            db.beginTransaction();
+            db.delete("personal", null, null);
+
+            for(Personal personal:lista){
+
+                ContentValues data = new ContentValues();
+                data.put("NOMBRE_USUARIO", personal.getNombreUsuario());
+                data.put("CONTRASENA_USUARIO", personal.getContraseniaUsuario());
+                data.put("cod_personal", personal.getCodPersonal());
+                data.put("NOMBRES_PERSONAL", personal.getNombresPersonal());
+                data.put("AP_PATERNO_PERSONAL", personal.getApPaternoPersonal());
+                data.put("AP_MATERNO_PERSONAL", personal.getApMaternoPersonal());
+                data.put("COD_AREA_EMPRESA", personal.getCodAreaEmpresa());
+                data.put("COD_CARGO", personal.getCodCargo());
+
+                cantidadPersonal+=db.insert("personal", null, data);
+
+            }
+            db.setTransactionSuccessful();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        finally{
+            db.endTransaction();
+            db.close();
+
+        }
+
+        return cantidadPersonal;
+    }
 //
 //    public long registrarPersonal(Personal personal) {
 //        SQLiteDatabase db = this.getWritableDatabase();
@@ -396,4 +397,21 @@ public class PersonalController extends SQLiteOpenHelper {
 //        if (db != null && db.isOpen())
 //            db.close();
 //    }
+
+    public String getNombreCargo(int codCargo){
+        String selectQuery = "select nombre_cargo from cargos where cod_cargo = " + codCargo;
+        String cargo = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            do {
+                cargo = c.getString(c.getColumnIndex("nombre_cargo"));
+            } while (c.moveToNext());
+        }
+        c.close();
+        db.close();
+
+        return cargo;
+    }
 }
