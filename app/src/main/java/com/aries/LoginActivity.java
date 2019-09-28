@@ -85,6 +85,7 @@ public class LoginActivity extends AppCompatActivity {
                         alertDialog.show();
                     }
                 } else {
+                    alertDialog.setMessage("Tabla Personal no existe");
                     alertDialog.show();
                 }
             }

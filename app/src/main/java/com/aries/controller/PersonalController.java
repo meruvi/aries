@@ -17,6 +17,7 @@ import java.util.Map;
 public class PersonalController extends SQLiteOpenHelper {
     private static final String DATA_BASE_NAME="aries";
     private static final int DATA_BASE_VERSION= Util.DATA_BASE_VERSION_ZEUS;
+    private static final String nombreTabla = "personal";
 //    SimpleDateFormat f=new SimpleDateFormat("yyy-MM-dd");
 //
 //    //com.google.
@@ -277,47 +278,50 @@ public class PersonalController extends SQLiteOpenHelper {
 //
     public Map<String, Personal> getListPersonal() {
 
-        Map<String,Personal>   listado=new HashMap<String,Personal>();
+        Map<String,Personal>   listado=null;
 
-        String selectQuery = "select cod_cargo,NOMBRE_USUARIO,CONTRASENA_USUARIO,cod_personal,NOMBRES_PERSONAL,AP_PATERNO_PERSONAL,AP_MATERNO_PERSONAL,cod_area_empresa from personal";
-        Log.i("INFO", selectQuery);
-        SQLiteDatabase db = this.getReadableDatabase();
+        if(verificarExisteTabla(nombreTabla)) {
+            listado=new HashMap<String,Personal>();
+            String selectQuery = "select cod_cargo,NOMBRE_USUARIO,CONTRASENA_USUARIO,cod_personal,NOMBRES_PERSONAL,AP_PATERNO_PERSONAL,AP_MATERNO_PERSONAL,cod_area_empresa from personal";
+            Log.i("INFO", selectQuery);
+            SQLiteDatabase db = this.getReadableDatabase();
 
-        Cursor c = db.rawQuery(selectQuery, null);
-        if (c.moveToFirst()) {
-            do {
+            Cursor c = db.rawQuery(selectQuery, null);
+            if (c.moveToFirst()) {
+                do {
 
-                Personal personal=new Personal();
-                personal.setNombreUsuario( c.getString(   c.getColumnIndex("NOMBRE_USUARIO")  )  );
-                personal.setContraseniaUsuario( c.getString(   c.getColumnIndex("CONTRASENA_USUARIO")  )  );
-                personal.setCodPersonal( c.getInt(   c.getColumnIndex("cod_personal")  )  );
-                personal.setNombresPersonal( c.getString(   c.getColumnIndex("NOMBRES_PERSONAL")  )  );
-                personal.setApPaternoPersonal( c.getString(   c.getColumnIndex("AP_PATERNO_PERSONAL")  )  );
-                personal.setApMaternoPersonal( c.getString(   c.getColumnIndex("AP_MATERNO_PERSONAL")  )  );
-                personal.setCodAreaEmpresa( c.getInt(   c.getColumnIndex("cod_area_empresa")  )  );
-                personal.setCodCargo( c.getInt(   c.getColumnIndex("cod_cargo")  )  );
+                    Personal personal = new Personal();
+                    personal.setNombreUsuario(c.getString(c.getColumnIndex("NOMBRE_USUARIO")));
+                    personal.setContraseniaUsuario(c.getString(c.getColumnIndex("CONTRASENA_USUARIO")));
+                    personal.setCodPersonal(c.getInt(c.getColumnIndex("cod_personal")));
+                    personal.setNombresPersonal(c.getString(c.getColumnIndex("NOMBRES_PERSONAL")));
+                    personal.setApPaternoPersonal(c.getString(c.getColumnIndex("AP_PATERNO_PERSONAL")));
+                    personal.setApMaternoPersonal(c.getString(c.getColumnIndex("AP_MATERNO_PERSONAL")));
+                    personal.setCodAreaEmpresa(c.getInt(c.getColumnIndex("cod_area_empresa")));
+                    personal.setCodCargo(c.getInt(c.getColumnIndex("cod_cargo")));
 
-                listado.put(  personal.getNombreUsuario()+personal.getContraseniaUsuario() , personal);
+                    listado.put(personal.getNombreUsuario() + personal.getContraseniaUsuario(), personal);
 
-            } while (c.moveToNext());
+                } while (c.moveToNext());
+            }
+            c.close();
+            db.close();
+
+            Personal p = new Personal();
+
+            p.setNombresPersonal("Administrador");
+            p.setApMaternoPersonal("");
+            p.setApPaternoPersonal("");
+            p.setCodAreaEmpresa(1);
+            p.setCodPersonal(1081);
+            p.setCodCargo(1081);
+            p.setNombreUsuario("admin");
+            p.setContraseniaUsuario("zeus");
+
+            listado.put("adminzeus", p);
+
+            Log.i("CANTIDAD PERSONAL", String.valueOf(listado.size()));
         }
-        c.close();
-        db.close();
-
-        Personal p=new Personal();
-
-        p.setNombresPersonal("Administrador");
-        p.setApMaternoPersonal("");
-        p.setApPaternoPersonal("");
-        p.setCodAreaEmpresa(1);
-        p.setCodPersonal(1081);
-        p.setCodCargo(1081);
-        p.setNombreUsuario("admin");
-        p.setContraseniaUsuario("zeus");
-
-        listado.put("adminzeus" , p);
-
-        Log.i("CANTIDAD PERSONAL", String.valueOf( listado.size()));
         return listado;
     }
 //
@@ -413,5 +417,24 @@ public class PersonalController extends SQLiteOpenHelper {
         db.close();
 
         return cargo;
+    }
+
+    public boolean verificarExisteTabla(String nombreTabla) {
+        boolean resultado = false;
+        Log.i("---INICIANDO---", "-----VERIFICANDO SI EXISTE TABLA ----");
+        String selectQuery = " select count(*) as cantidad from sqlite_master where name='" + nombreTabla + "' and type='table' ";
+        Log.i("INFO", selectQuery);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor c = db.rawQuery(selectQuery, null);
+        if (c.moveToFirst()) {
+            int cantidad = c.getInt(c.getColumnIndex("cantidad"));
+            if (cantidad > 0) {
+                resultado = true;
+                Log.i("LA TABLA:", "EXISTE");
+            }
+            c.close();
+            db.close();
+        }
+        return resultado;
     }
 }
