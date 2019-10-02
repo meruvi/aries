@@ -74,12 +74,14 @@ public class AriesApp extends Application {
 
     /* Eliminar anteriores archivos logs */
     public void cleanDirectory(File dir, String fName) {
-        for (File file: dir.listFiles()) {
-            if (file.getName().equals(fName)) {
-                //do nothing
-            } else {
-                //delete file
-                file.delete();
+        if(dir.listFiles() != null) {
+            for (File file : dir.listFiles()) {
+                if (file.getName().equals(fName)) {
+                    //do nothing
+                } else {
+                    //delete file
+                    file.delete();
+                }
             }
         }
     }
